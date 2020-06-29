@@ -7,8 +7,19 @@ import csv
 #provides the path of the csv file "budget-data.csv"
 data_budget = os.path.join("Resources","budget-data.csv")
 
+#initially setting the variables changes, net_total, previous and total_months to 0
+changes = 0
 net_total = 0
+previous = 0
 total_months = 0 
+changes = 0
+net_total = 0
+previous = 0
+total_months = 0 
+
+#created lists to store data
+profits = []
+
 
 #using the data_budget path, open the file; using alias csvfile
 #csvreader iterates over each line of the csvfile using the comma as a field separator(delimiter)
