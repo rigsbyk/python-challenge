@@ -30,8 +30,12 @@ with open(data_budget) as csvfile:
 
 
 
-    print(total_months)
-    print(net_total)
+    print("Total Months:" + str(total_months))
+    print("Total:" + str(net_total))
+    print("Average Change:")
+    print("Greatest Increase in Profit:")
+    print("Greatest Decrease in Profit:")
+
        # file1.write("Hello \n")
 
 #provides path of output results for new text file analysis.txt
