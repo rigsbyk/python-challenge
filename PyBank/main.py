@@ -29,6 +29,11 @@ with open(data_budget) as csvfile:
     #next(csvreader) just reads over the header; removing it from calculations
     csv_header = next(csvreader)
 
+    #next(csvreader) on the first row so that it can correctly calculate the Average Change 
+    #(as the first row of data(excluding header) doesn't have anything to calculate from)
+    first_row = next(csvreader)
+    previous = int(first_row[1])
+
     #going through each row after the header and first_row
     for row in csvreader:
     	print(row)
@@ -39,15 +44,21 @@ with open(data_budget) as csvfile:
         #using a counter to total up Profit/Losses
         net_total += int(row[1])
 
+        changes = int(row[1]) - previous
+        profits.append(changes)
+        previous = int(row[1])
+    
 
+	#after calculating above you find the average of those changes to find the Average Change       
+	average_change = round(sum(profits)/len(profits),2) 
 
     print("Total Months:" + str(total_months))
     print("Total:" + str(net_total))
-    print("Average Change:")
+    print("Average Change:" + str(average_change))
     print("Greatest Increase in Profit:")
     print("Greatest Decrease in Profit:")
 
-       # file1.write("Hello \n")
+
 
 #provides path of output results for new text file analysis.txt
 outpath = os.path.join("Analysis","analysis.txt")
@@ -59,7 +70,7 @@ with open(outpath, "w") as text_file:
 	text_file.write("------------------------\n")
 	text_file.write("Total Months: " + str(total_months) + "\n")
 	text_file.write("Total: " + str(net_total) + "\n")
-	text_file.write("Average Change:\n")
+	text_file.write("Average Change:" + str(average_change) + "\n")
 	text_file.write("Greatest Increase in Profits:\n")
 	text_file.write("Greatest Decrease in Profits:\n")
 
