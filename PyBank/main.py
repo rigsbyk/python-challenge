@@ -1,85 +1,110 @@
-#import os provides function for interacting with the operating system(OS)
-#import csv is a module for importing and reading csv files
+#!/usr/bin/env python
+# coding: utf-8
+
+
+# Import os provides function for interacting with the operating system(OS)
+# Import csv is a module for importing and reading csv files
 import os
 import csv
 
 
-#provides the path of the csv file "budget-data.csv"
-data_budget = os.path.join("Resources","budget-data.csv")
+# Provides the path of the csv file "election_data.csv"
+election_data = os.path.join("Resources","election_data.csv")
 
 
-#initially setting the variables changes
-changes = 0
-net_total = 0
-previous = 0
-total_months = 0 
+# Initially setting variables
+vote_count = 0
 
-#created lists to store data
-date = [] 
-profits = []
+# Creating lists to store data
+candidate_percent = 0
 
+# Created lists to store data
+candidate_khan= []
+candidate_correy = []
+candidate_li = []
+candidate_otooley = []
+winner = []
 
-#opens up the csvfile from the data_budget path provided above
-#csvreader iterates over each line of the csvfile
-with open(data_budget) as csvfile:
+# Opens up the csvfile from the data_budget path provided above
+# CSVreader iterates over each line of the csvfile
+with open(election_data) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
     
-    #next(csvreader) just reads over the header; removing it from calculations
+    # Next(csvreader) just reads over the header; removing it from calculations
     csv_header = next(csvreader)
     
-    #next(csvreader) on the first row so that it can calculate the Average Change
-    #starting with the second row of calcuable data
-    first_row = next(csvreader)
-    previous = int(first_row[1])
-    net_total = net_total + int(first_row[1])
-    total_months = total_months + 1
-    
-    #going through each row after the header and first_row
+    # Going through each row after the header and first_row
     for row in csvreader:
         
-        #using a count to get total number of rows for total months count
-        total_months += 1
+        # Using a count to grab total votes
+        vote_count += 1
         
-        #using a counter to total up Profit/Losses
-        net_total = net_total + int(row[1])
-     
-        #as it goes through for row in csvreader, it calculates the changes
-        #Then it adds those calculations to the profit list
-        changes = int(row[1]) - previous
-        profits.append(changes)
-        previous = int(row[1])
+        # Using a conditional to sort the candidates for calculations
+        # Then storing that data to a list for each candidate
+        if (row[2] == "Khan"):
+            candidate_khan.append(row[2])
+        elif (row[2]) == "Correy":
+            candidate_correy.append(row[2])
+        elif (row[2]) == "Li":
+            candidate_li.append(row[2])
+        elif (row[2]) == "O'Tooley":
+            candidate_otooley.append(row[2])
+            
+        # Finding out number of votes for each candidate
+        khan_votes = len(candidate_khan)
+        correy_votes = len(candidate_correy)
+        li_votes = len(candidate_li)
+        otooley_votes = len(candidate_otooley)
         
-        #calculating greatest increase/decrease of profits using stored profits data
-        greatestincrease = max(profits)
-        greatestdecrease = min(profits)
+        # Finding out percent of votes for each candidate
+        khan_per = (khan_votes/vote_count) *100
+        correy_per = (correy_votes/vote_count) *100
+        li_per = (li_votes/vote_count) *100
+        otooley_per = (otooley_votes/vote_count) *100
         
-        #grabbing the associated date of greatest increase/decrease using the index list method
-        date.append(row[0])
-        idate = date[profits.index(greatestincrease)]
-        ddate = date[profits.index(greatestdecrease)]
-    
-    
-#after calculating above you find the average of those changes to find the Average Change       
-average_change = round(sum(profits)/len(profits),2)
+        # Setting up to compare each candidate list to find the winner
+        # The max value will be the winner
+        winner = [khan_votes,correy_votes,li_votes,otooley_votes]
+        final_winner = max(winner)
+        
+        # Using a conditional to find the max value and who has that max value
+        if final_winner == khan_votes:
+            winner_name = 'Khan'
+        elif final_winner == correy_votes:
+            winner_name = "Correy"
+        elif final_winner == li_votes:
+            winner_name = "Li"
+        elif final_winner == otooley_votes:
+            winner_name = "O'Tooley"
 
-#created a string to be able to call on for both print and output
+
+# Created a string to be able to call on for both print and output
 results = (
-            f"Financial Analysis\n"
-            f"---------------------\n"
-            f"Total Months:{total_months}\n"
-            f"Total:{net_total}\n"
-            f"Average Change:{average_change}\n"
-            f"Greatest Increase in Profits: {idate} ${greatestincrease}\n"
-            f"Greatest Decrease in Profits: {ddate} ${greatestdecrease}\n"
+
+            f"Election Results\n"
+            f"-----------------------------\n"
+            f"Total Votes:{vote_count}\n"
+            f"-----------------------------\n"
+            f"Kahn: {khan_per:.3f}% ({khan_votes})\n"
+            f"Correy: {correy_per:.3f}% ({correy_votes})\n"
+            f"Li: {li_per:.3f}% ({li_votes})\n"
+            f"O'Tooley: {otooley_per:.3f}% ({otooley_votes})\n"
+            f"-----------------------------\n"
+            f"Winner:{winner_name}\n"
+            f"-----------------------------\n"
             )
 
-#print results
+
+# Print results
 print(results)
 
-#provides path of output results for new text file analysis.txt
-outpath = os.path.join("Analysis","analysis.txt")
 
-#opens file for writing and writes the results to analysis.txt
+# Provides path of output results for new text file analysis.txt
+outpath = os.path.join("Analysis", "analysis.txt")
+
+# Opens file for writing and writes the results to analysis.txt
 with open(outpath, "w") as text_file:
     text_file.write(results)
-    
+
+
+

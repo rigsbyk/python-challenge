@@ -1,23 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 #import os provides function for interacting with the operating system(OS)
 #import csv is a module for importing and reading csv files
 import os
 import csv
 
-
-# In[2]:
-
-
 #provides the path of the csv file "election_data.csv"
 election_data = os.path.join("Resources","election_data.csv")
-
-
-# In[3]:
 
 
 #initially setting variables
@@ -32,10 +22,6 @@ candidate_correy = []
 candidate_li = []
 candidate_otooley = []
 winner = []
-
-
-# In[4]:
-
 
 #opens up the csvfile from the data_budget path provided above
 #csvreader iterates over each line of the csvfile
@@ -89,10 +75,6 @@ with open(election_data) as csvfile:
         elif final_winner == otooley_votes:
             winner_name = "O'Tooley"
 
-
-# In[ ]:
-
-
 #created a string to be able to call on for both print and output
 results = (
 
@@ -110,30 +92,17 @@ results = (
             )
 
 
-# In[ ]:
-
 
 #print results
 print(results)
-
-
-# In[ ]:
 
 
 #provides path of output results for new text file analysis.txt
 outpath = os.path.join("Analysis", "analysis.txt")
 
 
-# In[ ]:
-
-
 #opens file for writing and writes the results to analysis.txt
 with open(outpath, "w") as text_file:
     text_file.write(results)
-
-
-# In[ ]:
-
-
 
 
