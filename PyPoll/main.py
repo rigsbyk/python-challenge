@@ -12,8 +12,6 @@ election_data = os.path.join("Resources","election_data.csv")
 
 #initially setting variables
 vote_count = 0
-
-#creating lists to store data
 candidate_percent = 0
 
 #created lists to store data
